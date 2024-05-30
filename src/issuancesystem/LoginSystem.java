@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -56,6 +57,8 @@ public class LoginSystem {
         Scanner read = new Scanner(System.in);
         
         while(true){
+            
+        try{
             System.err.println("-----Login-----");
             System.err.print("Account No: ");
             int accNo = read.nextInt();
@@ -71,8 +74,13 @@ public class LoginSystem {
             }
                 
             System.out.println("Invalid username or password.");
+        }catch(InputMismatchException ex){
+                System.out.println("Invalid input!");
+                read.nextLine();
         }
+            
     }  
+  } 
         
     public boolean verifyLogin(int accNo, String password) {
         if (accNo == 0 || password == null) {

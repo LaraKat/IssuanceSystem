@@ -14,12 +14,13 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CompliantUserEnd{
     private static final String ROOT_PATH = "C:\\Users\\Lara\\Documents\\NetBeansProjects\\IssuanceSystem\\Storage\\";
-    private static final String BANKING_ISSUES_PATH = "BankingIssue\\";
-    private static final String TECHNICAL_ISSUES_PATH = "TransactionIssue\\";
+    private static final String ACCOUNT_RELATED_PATH = "Account-related\\";
+    private static final String TRANSACTION_RELATED_PATH = "Transaction-related\\";
     private static final String OTHER_ISSUES_PATH = "OtherIssue\\";
     private final Account currentUser;
     
@@ -32,6 +33,8 @@ public class CompliantUserEnd{
         LoginSystem loginSystem = new LoginSystem();
         
         while(true){
+            
+        try{
             System.out.println("1. File an complain");
             System.out.println("2. Logout");
             System.out.print("Selection: ");
@@ -42,9 +45,12 @@ public class CompliantUserEnd{
                 case 2 -> loginSystem.login();
                 default -> System.out.println("Invalid choice!");
             }
-        }
+        }catch(InputMismatchException ex){
+            System.out.println("Invalid input!");
+            scanner.nextLine();
+        }        
+      } 
     }
-    
     public void issuance(){
         String accName = currentUser.getFullname();
         String accNo = String.valueOf(currentUser.getAccountNo());
@@ -52,14 +58,16 @@ public class CompliantUserEnd{
         Scanner scanner = new Scanner(System.in);
             
         while(true){
-            System.out.println("Enter the issue type: \n1. Banking\n2. Technical\n3. Other");
+        
+        try{
+            System.out.println("Enter the issue type: \n1. Account-related\n2. Transaction-related\n3. OtherIssue");
             System.out.print("Selection: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); //Consumes a line
             
             String issueType = switch (choice) {
-                case 1 -> "Banking Issue";
-                case 2 -> "Technical Issue";
+                case 1 -> "Account-related";
+                case 2 -> "Transaction-related";
                 case 3 -> "Other Issue";
                 default -> "";
             };
@@ -79,7 +87,11 @@ public class CompliantUserEnd{
                     break;
                 }
             }
+        }catch(InputMismatchException ex){
+            System.out.println("Invalid input!");
+            scanner.nextLine();  
         }
+        }       
     }
     
     public void registerIssue(int issueChoice, String type, String accountName, String accountNumber, String description) {
@@ -109,10 +121,10 @@ public class CompliantUserEnd{
 
     private String getFileName(int choice) {
         return switch (choice) {
-            case 1 -> BANKING_ISSUES_PATH;
-            case 2 -> TECHNICAL_ISSUES_PATH;
+            case 1 -> ACCOUNT_RELATED_PATH;
+            case 2 -> TRANSACTION_RELATED_PATH;
             case 3 -> OTHER_ISSUES_PATH;
-            default -> "";
+            default -> ""; 
         };
     }
 
