@@ -31,13 +31,13 @@ public class ResolverIssueEnd {
         
         while(true){
         
-        try{
-            System.out.println("Choose an Category\n1. Account-related\n2. Transaction\n3. Others\n4. Exit");
+        try{         
+            System.out.println("----Choose an Category----\n1. Account-related\n2. Transaction\n3. Others");
             System.out.println("Selection: ");
             int choice = scanner.nextInt();
 
             if(choice == 4){
-                return;
+                break;
             }
             String issueType = switch (choice) {
                 case 1 -> "Account-related";
@@ -83,26 +83,37 @@ public class ResolverIssueEnd {
                 System.out.println(baseName);
             }
             System.out.println("-------------------");
-            //thinks
-            try{     
-                System.out.println("1. Resolve Issue\n2. Back");
-                System.out.print("Selection: ");
-                int selection = scan.nextInt();
-                scan.nextLine(); //Consumes a line
-                switch(selection){
-                    case 1 -> {
-                        System.out.print("Enter issuance code to view: ");
-                        String issuanceCode = scan.nextLine();
-                        viewIssue(fullPath, issuanceCode);
-                    }
-                    case 2 -> start();
-                    default -> System.out.println("Invalid Input");
-                }
-
-            }catch(InputMismatchException ex){
-                System.err.println("Invalid data type!");
-                scan.nextLine(); //Consumes a line
+            System.out.print("Enter issuance code to view: ");
+            String issuanceCode = scan.nextLine();
+   
+            if(!issuanceCode.isBlank()){
+                viewIssue(fullPath, issuanceCode);  
             }
+            
+            System.out.println("Issuance code is empty!");  
+
+
+            
+//            try{     
+//                System.out.println("1. Resolve Issue\n2. Back");
+//                System.out.print("Selection: ");
+//                int selection = scan.nextInt();
+//                scan.nextLine(); //Consumes a line
+//                switch(selection){
+//                    case 1 -> {
+//                        System.out.println("------------------------------");
+//                        System.out.print("Enter issuance code to view: ");
+//                        String issuanceCode = scan.nextLine();
+//                        viewIssue(fullPath, issuanceCode);
+//                    }
+//                    case 2 -> start();
+//                    default -> System.out.println("Invalid Input");
+//                }
+//
+//            }catch(InputMismatchException ex){
+//                System.err.println("Invalid data type!");
+//                scan.nextLine(); //Consumes a line
+//            }
         }
     }
     
@@ -113,22 +124,24 @@ public class ResolverIssueEnd {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
-            
+            System.out.println("--------------------------------");
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
-            //thanks po dearest <3
+            System.out.println("--------------------------------");
         } catch (IOException ex) {
             System.err.println("File not found or could not read the file.");
             return;
         }
         
-        System.out.println("Do you want to resolve this?(yes/no)\nAnswer: ");
-        String answer = scan.nextLine();
-        if("yes".equals(answer)){
+        System.out.println("Do you want to resolve this?(yes/no)");
+        System.out.print("Answer: ");
+        String answer = scan.next();
+        if("yes".equals(answer.toLowerCase())){
             resolveIssue(filePath, fileName);
         }else{
-            System.out.println("Returning to main menu...");
+            System.out.println("--------------------------------");
+            System.out.println("Returning to main menu...");         
             start();
         }
     }
@@ -137,7 +150,9 @@ public class ResolverIssueEnd {
         
         try{
             if (Files.deleteIfExists(filePath)) {
+                System.out.println("-------------------------------");
                 System.out.println("Issue " + fileName + " resolved and file deleted.");
+                System.out.println("-------------------------------");
             } else {
                 System.out.println("Issue " + fileName + " not found.");
             }

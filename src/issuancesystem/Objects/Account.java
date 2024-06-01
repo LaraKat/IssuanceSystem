@@ -9,17 +9,17 @@ package issuancesystem.Objects;
  * @author Lara
  */
 public class Account {
-    private int AccountNo;
+    private String AccountNo;
     private String Password;
     private String Fullname;
 
-    public Account(int AccountNo, String Password, String Fullname) {
+    public Account(String AccountNo, String Password, String Fullname) {
         this.AccountNo = AccountNo;
         this.Password = Password;
         this.Fullname = Fullname;
     }
 
-    public int getAccountNo() {
+    public String getAccountNo() {
         return AccountNo;
     }
 

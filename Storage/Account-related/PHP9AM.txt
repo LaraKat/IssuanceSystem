@@ -1,6 +1,0 @@
-Date and Time: 20240527_012930
-Account No: 1
-Account Name: Marc Nelson Belasa
-Issue Type: Banking Issue
-Description: something wrong
-Marc Nelson Belasa,1,something wrong

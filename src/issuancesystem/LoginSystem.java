@@ -40,7 +40,7 @@ public class LoginSystem {
                 // Assuming each line in the file contains account information in the format: accountNo,password,fullName
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
-                    int accountNo = Integer.parseInt(parts[0]);
+                    String accountNo = parts[0];
                     String password = parts[1];
                     String fullName = parts[2];
 
@@ -55,41 +55,53 @@ public class LoginSystem {
     
     public void login(){
         Scanner read = new Scanner(System.in);
-        
-        while(true){
-            
-        try{
-            System.err.println("-----Login-----");
-            System.err.print("Account No: ");
-            int accNo = read.nextInt();
-            read.nextLine();
-            System.out.print("Password: ");
-            String password = read.nextLine();
+        String regex = "^[a-zA-Z]+$";
+        boolean flag = false;
 
-            if(verifyLogin(accNo, password)){
-                System.out.println("Hello, " + currentUser.getFullname());
-                CompliantUserEnd compliant = new CompliantUserEnd(currentUser);
-                compliant.start();
-                break;
-            }
+        while(true){
+            try{
+                System.err.println("-----Login-----");
+                System.err.print("Account No: ");
+                String accNo = read.nextLine();
                 
-            System.out.println("Invalid username or password.");
-        }catch(InputMismatchException ex){
-                System.out.println("Invalid input!");
-                read.nextLine();
-        }
-            
-    }  
-  } 
+                 if(String.valueOf(accNo).length() == 4){ 
+                        
+                        System.out.print("Password: ");
+                        String password = read.nextLine(); 
+                        
+                        if  (password.matches(regex)){
+                            
+                            if(verifyLogin(accNo, password)){
+                                System.out.println("--------------------------------");
+                                System.out.println("Hello, " + currentUser.getFullname() +"!");
+                                System.out.println("--------------------------------");
+                                CompliantUserEnd compliant = new CompliantUserEnd(currentUser);
+                                compliant.start();
+                            }else{
+                                System.out.println("Invalid username or password.");
+                            }
+                        }else{
+                            System.out.println("Password must be letters!");
+                        }                      
+                    }else{
+                        System.out.println("Number must contain 4 digits only. ");
+                    }
+                
+                }
+            catch(InputMismatchException ex){
+                    System.out.println("Invalid input!" + ex.getMessage());
+                    read.nextLine();
+            }
+        }  
+    } 
         
-    public boolean verifyLogin(int accNo, String password) {
-        if (accNo == 0 || password == null) {
+    public boolean verifyLogin(String accNo, String password) {
+        if (accNo == null && password == null) {
             return false; // Account number or password cannot be empty or null
         }
 
         for (Account acc : accounts) {
-            if (acc.getAccountNo() == accNo && acc.getPassword().equals(password)) {
-                
+            if (acc.getAccountNo().equals(accNo)  && acc.getPassword().equals(password)) {
                 Account account = new Account(acc.getAccountNo(), acc.getPassword(), acc.getFullname());
                 currentUser = account;
                 return true; // Found matching account number and password

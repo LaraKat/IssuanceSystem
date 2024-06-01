@@ -22,28 +22,34 @@ public class IssuanceSystem {
         LoginSystem loginSystem = new LoginSystem();
         ResolverIssueEnd resolverSystem = new ResolverIssueEnd();
         
-        
         while(true){
-        try{
-            System.out.println("SELECT-A-SYSTEM");
-            System.out.println("1. Compliant User End\n2. Resolver User End");
-            System.out.print("Selection: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            
-            switch(choice){
-            case 1 -> loginSystem.login();
-            case 2 -> resolverSystem.start();
-            default -> {
-                System.out.println("System shutdown.");
-                System.exit(0);
+            try{
+                System.out.println("----SELECT-A-SYSTEM----");
+                System.out.println("A. Compliant User End\nB. Resolver User End\nC. Exit");
+                System.out.print("Selection: ");
+                String choice = scanner.nextLine();
+
+                if(choice.isBlank()){
+                    throw new NullPointerException();
+                }
+                    
+                switch(choice.toLowerCase().charAt(0)){
+                    case 'a' -> loginSystem.login();
+                    case 'b' -> resolverSystem.start();
+                    case 'c' -> {
+                        System.out.println("System shutdown!");
+                        System.exit(0);
+                    }
+                    default -> System.out.println("Invalid input!");
+                } 
+            }catch(InputMismatchException ex){
+                System.out.println("Please try again.");
+                scanner.nextLine();
+            }catch(NullPointerException ex){
+                System.out.println("Invalid input!" + ex.getMessage());
+                scanner.nextLine();
             }
-        } 
-        }catch(InputMismatchException ex){
-            System.out.println("Please try again.");
-            scanner.nextLine();
         }
-    }
     }
 }
  

@@ -34,22 +34,23 @@ public class CompliantUserEnd{
         
         while(true){
             
-        try{
-            System.out.println("1. File an complain");
-            System.out.println("2. Logout");
-            System.out.print("Selection: ");
-            int choice = scanner.nextInt();
+            try{
+                System.out.println("1. File an complain");
+                System.out.println("2. Logout");
+                System.out.print("Selection: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch(choice){
-                case 1 -> issuance();
-                case 2 -> loginSystem.login();
-                default -> System.out.println("Invalid choice!");
-            }
-        }catch(InputMismatchException ex){
-            System.out.println("Invalid input!");
-            scanner.nextLine();
-        }        
-      } 
+                switch(choice){
+                    case 1 -> issuance();
+                    case 2 -> loginSystem.login();
+                    default -> System.out.println("Invalid choice!");
+                }
+            }catch(InputMismatchException ex){
+                System.out.println("Invalid input!");
+                scanner.nextLine();
+            }        
+        } 
     }
     public void issuance(){
         String accName = currentUser.getFullname();
@@ -60,6 +61,7 @@ public class CompliantUserEnd{
         while(true){
         
         try{
+            System.out.println("-------------------------");
             System.out.println("Enter the issue type: \n1. Account-related\n2. Transaction-related\n3. OtherIssue");
             System.out.print("Selection: ");
             int choice = scanner.nextInt();
@@ -69,15 +71,17 @@ public class CompliantUserEnd{
                 case 1 -> "Account-related";
                 case 2 -> "Transaction-related";
                 case 3 -> "Other Issue";
-                default -> "";
+                default -> "vdbgfdb";
             };
             
             if(!issueType.isBlank()){
+                System.out.println("--------------------------");
                 System.out.println("Enter a brief description of the issue: ");
                 String issueDescription = scanner.nextLine();
-
+                
                 if(!issueDescription.isBlank()){
                     
+                    System.out.println("-----------------");
                     System.out.println("Confirm if you want to submit(yes/no)");
                     String confirmation = scanner.nextLine();
                     
@@ -88,11 +92,11 @@ public class CompliantUserEnd{
                 }
             }
         }catch(InputMismatchException ex){
-            System.out.println("Invalid input!");
+            System.out.println("Invalid input!" + ex.getMessage());
             scanner.nextLine();  
         }
-        }       
-    }
+    }       
+}
     
     public void registerIssue(int issueChoice, String type, String accountName, String accountNumber, String description) {
         String folderPath = getFileName(issueChoice);
@@ -102,6 +106,7 @@ public class CompliantUserEnd{
         Path filePath = Paths.get(ROOT_PATH + folderPath + fileName +".txt");
         
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE)) {
+            
             writer.write("Date: " + timeStamp);
             writer.newLine();
             writer.write("Account No: " + accountNumber);
@@ -111,9 +116,11 @@ public class CompliantUserEnd{
             writer.write("Issue Type: " + type);
             writer.newLine();
             writer.write("Description: ");
-            writer.write(description);
+            writer.write(description);         
             writer.newLine();
+            System.out.println("--------------------------------");
             System.out.println("Issue registered successfully!");
+            System.out.println("--------------------------------");
         } catch (IOException e) {
             System.out.println("Error occurred while registering the issue: " + e.getMessage());
         }
@@ -124,7 +131,7 @@ public class CompliantUserEnd{
             case 1 -> ACCOUNT_RELATED_PATH;
             case 2 -> TRANSACTION_RELATED_PATH;
             case 3 -> OTHER_ISSUES_PATH;
-            default -> ""; 
+            default -> "fgfbgfb"; 
         };
     }
 
