@@ -20,7 +20,7 @@ import java.util.Scanner;
  * @author Lara
  */
 public class LoginSystem {
-    private final String ACCOUNT_PATH = "AccountsFile.txt";
+    private final Path ACCOUNT_PATH = Paths.get("Storage\\AccountsFile.txt");
     private final List<Account> accounts;
     private Account currentUser;
 
@@ -31,7 +31,7 @@ public class LoginSystem {
     }
     
     private void InitializeAccounts(){
-        Path filePath = Paths.get("C:\\Users\\Lara\\Documents\\NetBeansProjects\\IssuanceSystem\\Storage\\" + ACCOUNT_PATH);
+        Path filePath = Paths.get(ACCOUNT_PATH.toAbsolutePath().toString());
         try{
             BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()));
         

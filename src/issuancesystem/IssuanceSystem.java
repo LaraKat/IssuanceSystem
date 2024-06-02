@@ -18,6 +18,12 @@ public class IssuanceSystem {
      */
     public static void main(String[] args) {
         
+        IssuanceSystem system = new IssuanceSystem();
+        system.startIssuanceSystem();
+    }
+    
+    public void startIssuanceSystem(){
+    
         Scanner scanner = new Scanner(System.in);
         LoginSystem loginSystem = new LoginSystem();
         ResolverIssueEnd resolverSystem = new ResolverIssueEnd();

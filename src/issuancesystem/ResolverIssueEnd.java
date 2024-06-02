@@ -6,7 +6,6 @@ package issuancesystem;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,49 +20,51 @@ import java.util.Scanner;
  */
     
 public class ResolverIssueEnd {
-    private static final String ROOT_PATH = "C:\\Users\\Lara\\Documents\\NetBeansProjects\\IssuanceSystem\\Storage\\";
-    private static final String ACCOUNT_RELATED_PATH = "Account-related\\";
-    private static final String TRANSACTION_RELATED_PATH = "Transaction-related\\";
-    private static final String OTHER_ISSUES_PATH = "OtherIssue\\";
+    private static final Path ROOT_PATH = Paths.get("Storage");
+    private static final String ACCOUNT_RELATED_PATH = "\\Account-related\\";
+    private static final String TRANSACTION_RELATED_PATH = "\\Transaction-related\\";
+    private static final String OTHER_ISSUES_PATH = "\\OtherIssue\\";
     
     public void start(){
         Scanner scanner = new Scanner(System.in);
+        IssuanceSystem system = new IssuanceSystem();
         
         while(true){
         
-        try{         
-            System.out.println("----Choose an Category----\n1. Account-related\n2. Transaction\n3. Others");
-            System.out.println("Selection: ");
-            int choice = scanner.nextInt();
+            try{         
+                System.out.println("----Choose an Category----\n1. Account-related\n2. Transaction\n3. Others\n4. Exit");
+                System.out.println("Selection: ");
+                int choice = scanner.nextInt();
 
-            if(choice == 4){
-                break;
+                if(choice == 4){
+                    system.startIssuanceSystem();
+                    break;
+                }
+                String issueType = switch (choice) {
+                    case 1 -> "Account-related";
+                    case 2 -> "Transaction-related";
+                    case 3 -> "Other Issue";
+                    default -> "";
+                };
+
+                if(!issueType.isEmpty()){
+                    getAllIssuanceByCategory(choice, issueType);
+                    break;
+                }
+
+                System.out.println("Invalid Input try again!");
+
+            }catch(InputMismatchException ex){
+                System.out.println("Invalid input!");
+                scanner.nextLine();
             }
-            String issueType = switch (choice) {
-                case 1 -> "Account-related";
-                case 2 -> "Transaction-related";
-                case 3 -> "Other Issue";
-                default -> "";
-            };
-
-            if(!issueType.isEmpty()){
-                getAllIssuanceByCategory(choice, issueType);
-                break;
-            }
-            
-            System.out.println("Invalid Input try again!");
-
-        }catch(InputMismatchException ex){
-            System.out.println("Invalid input!");
-            scanner.nextLine();
         }
-    }
     }
     
     private void getAllIssuanceByCategory(int choice, String type){
         Scanner scan = new Scanner(System.in);
         String folderPath = getFileName(choice);
-        String fullPath = ROOT_PATH + folderPath;
+        String fullPath = ROOT_PATH.toAbsolutePath() + folderPath;
         File dir = new File(fullPath);
         File[] files = dir.listFiles((d, name) -> name.endsWith(".txt"));
         

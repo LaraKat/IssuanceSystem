@@ -18,10 +18,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CompliantUserEnd{
-    private static final String ROOT_PATH = "C:\\Users\\Lara\\Documents\\NetBeansProjects\\IssuanceSystem\\Storage\\";
-    private static final String ACCOUNT_RELATED_PATH = "Account-related\\";
-    private static final String TRANSACTION_RELATED_PATH = "Transaction-related\\";
-    private static final String OTHER_ISSUES_PATH = "OtherIssue\\";
+    private static final Path ROOT_PATH = Paths.get( "Storage");
+    private static final String ACCOUNT_RELATED_PATH = "\\Account-related\\";
+    private static final String TRANSACTION_RELATED_PATH = "\\Transaction-related\\";
+    private static final String OTHER_ISSUES_PATH = "\\OtherIssue\\";
     private final Account currentUser;
     
     public CompliantUserEnd(Account account){
@@ -30,7 +30,7 @@ public class CompliantUserEnd{
     
     public void start(){
         Scanner scanner = new Scanner(System.in);
-        LoginSystem loginSystem = new LoginSystem();
+        IssuanceSystem system = new IssuanceSystem();
         
         while(true){
             
@@ -43,7 +43,10 @@ public class CompliantUserEnd{
 
                 switch(choice){
                     case 1 -> issuance();
-                    case 2 -> loginSystem.login();
+                    case 2 -> {
+                        system.startIssuanceSystem();
+                        break;
+                    }
                     default -> System.out.println("Invalid choice!");
                 }
             }catch(InputMismatchException ex){
@@ -103,7 +106,7 @@ public class CompliantUserEnd{
         String fileName = generateCode();
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        Path filePath = Paths.get(ROOT_PATH + folderPath + fileName +".txt");
+        Path filePath = Paths.get(ROOT_PATH.toAbsolutePath() + folderPath + fileName +".txt");
         
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE)) {
             
