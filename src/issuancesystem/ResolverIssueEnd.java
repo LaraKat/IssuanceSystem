@@ -91,30 +91,7 @@ public class ResolverIssueEnd {
                 viewIssue(fullPath, issuanceCode);  
             }
             
-            System.out.println("Issuance code is empty!");  
-
-
-            
-//            try{     
-//                System.out.println("1. Resolve Issue\n2. Back");
-//                System.out.print("Selection: ");
-//                int selection = scan.nextInt();
-//                scan.nextLine(); //Consumes a line
-//                switch(selection){
-//                    case 1 -> {
-//                        System.out.println("------------------------------");
-//                        System.out.print("Enter issuance code to view: ");
-//                        String issuanceCode = scan.nextLine();
-//                        viewIssue(fullPath, issuanceCode);
-//                    }
-//                    case 2 -> start();
-//                    default -> System.out.println("Invalid Input");
-//                }
-//
-//            }catch(InputMismatchException ex){
-//                System.err.println("Invalid data type!");
-//                scan.nextLine(); //Consumes a line
-//            }
+            System.out.println("Issuance code is empty!");            
         }
     }
     
@@ -159,7 +136,6 @@ public class ResolverIssueEnd {
             }
         }catch(IOException e){
             System.out.println("An error occurred while trying to resolve the issue.");
-            e.printStackTrace();
         }
         start();
     }

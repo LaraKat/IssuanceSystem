@@ -21,7 +21,7 @@ public class CompliantUserEnd{
     private static final Path ROOT_PATH = Paths.get( "Storage");
     private static final String ACCOUNT_RELATED_PATH = "\\Account-related\\";
     private static final String TRANSACTION_RELATED_PATH = "\\Transaction-related\\";
-    private static final String OTHER_ISSUES_PATH = "\\OtherIssue\\";
+    private static final String OTHER_ISSUES_PATH = "\\Other-Issue\\";
     private final Account currentUser;
     
     public CompliantUserEnd(Account account){
