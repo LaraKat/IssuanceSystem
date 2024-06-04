@@ -31,18 +31,14 @@ public class IssuanceSystem {
         while(true){
             try{
                 System.out.println("----SELECT-A-SYSTEM----");
-                System.out.println("A. Compliant User End\nB. Resolver User End\nC. Exit");
+                System.out.println("1. Compliant User End\n2. Resolver User End\n3. Exit");
                 System.out.print("Selection: ");
-                String choice = scanner.nextLine();
+                int choice = scanner.nextInt();
 
-                if(choice.isBlank()){
-                    throw new NullPointerException();
-                }
-                    
-                switch(choice.toLowerCase().charAt(0)){
-                    case 'a' -> loginSystem.login();
-                    case 'b' -> resolverSystem.start();
-                    case 'c' -> {
+                switch(choice){
+                    case 1 -> loginSystem.login();
+                    case 2 -> resolverSystem.start();
+                    case 3 -> {
                         System.out.println("System shutdown!");
                         System.exit(0);
                     }
@@ -50,9 +46,6 @@ public class IssuanceSystem {
                 } 
             }catch(InputMismatchException ex){
                 System.out.println("Please try again.");
-                scanner.nextLine();
-            }catch(NullPointerException ex){
-                System.out.println("Invalid input!" + ex.getMessage());
                 scanner.nextLine();
             }
         }

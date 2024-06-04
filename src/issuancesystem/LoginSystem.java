@@ -20,6 +20,7 @@ import java.util.Scanner;
  * @author Lara
  */
 public class LoginSystem {
+    private final Scanner read = new Scanner(System.in);
     private final Path ACCOUNT_PATH = Paths.get("Storage\\AccountsFile.txt");
     private final List<Account> accounts;
     private Account currentUser;
@@ -55,45 +56,60 @@ public class LoginSystem {
     
     public void login(){
         Scanner read = new Scanner(System.in);
-        String regex = "^[a-zA-Z]+$";
-        boolean flag = false;
 
-        while(true){
-            try{
-                System.err.println("-----Login-----");
-                System.err.print("Account No: ");
-                String accNo = read.nextLine();
-                
-                 if(String.valueOf(accNo).length() == 4){ 
-                        
-                        System.out.print("Password: ");
-                        String password = read.nextLine(); 
-                        
-                        if  (password.matches(regex)){
-                            
-                            if(verifyLogin(accNo, password)){
-                                System.out.println("--------------------------------");
-                                System.out.println("Hello, " + currentUser.getFullname() +"!");
-                                System.out.println("--------------------------------");
-                                CompliantUserEnd compliant = new CompliantUserEnd(currentUser);
-                                compliant.start();
-                            }else{
-                                System.out.println("Invalid username or password.");
-                            }
-                        }else{
-                            System.out.println("Password must be letters!");
-                        }                      
-                    }else{
-                        System.out.println("Number must contain 4 digits only. ");
-                    }
-                
+        while (true) {
+            try {
+                System.out.println("\n-----Login-----");
+                String accNo = promptForAccountNumber();
+
+                if (accNo == null) {
+                    System.out.println("Number must contain 4 digits only.");
+                    continue;
                 }
-            catch(InputMismatchException ex){
-                    System.out.println("Invalid input!" + ex.getMessage());
-                    read.nextLine();
+
+                String password = promptForPassword();
+
+                if (password == null) {
+                    System.out.println("Password must be letters!");
+                    continue;
+                }
+
+                if (verifyLogin(accNo, password)) {
+                    greetUser();
+                    startUserSession();
+                } else {
+                    System.out.println("Invalid username or password.");
+                }
+
+            } catch (InputMismatchException ex) {
+                System.out.println("Invalid input! " + ex.getMessage());
+                read.nextLine();
             }
-        }  
+        }
     } 
+    
+    private String promptForAccountNumber() {
+        System.out.print("Account No: ");
+        String accNo = read.nextLine();
+        return accNo.matches("^[0-9]{4}$") ? accNo : null;
+    }
+
+    private String promptForPassword() {
+        System.out.print("Password: ");
+        String password = read.nextLine();
+        return password.matches("^[a-zA-Z]+$") ? password : null;
+    }
+
+    private void greetUser() {
+        System.out.println("--------------------------------");
+        System.out.println("Hello, " + currentUser.getFullname() + "!");
+        System.out.println("--------------------------------");
+    }
+    
+    private void startUserSession() {
+        CompliantUserEnd compliant = new CompliantUserEnd(currentUser);
+        compliant.start();
+    }
         
     public boolean verifyLogin(String accNo, String password) {
         if (accNo == null && password == null) {
