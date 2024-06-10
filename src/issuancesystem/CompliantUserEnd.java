@@ -21,7 +21,7 @@ public class CompliantUserEnd{
     private static final Path ROOT_PATH = Paths.get( "Storage");
     private static final String ACCOUNT_RELATED_PATH = "\\Account-related\\";
     private static final String TRANSACTION_RELATED_PATH = "\\Transaction-related\\";
-    private static final String OTHER_ISSUES_PATH = "\\Other-Issue\\";
+    private static final String OTHER_ISSUES = "\\Other-issues\\";
     private final Account currentUser;
     
     public CompliantUserEnd(Account account){
@@ -65,7 +65,7 @@ public class CompliantUserEnd{
         
         try{
             System.out.println("-------------------------");
-            System.out.println("Enter the issue type: \n1. Account-related\n2. Transaction-related\n3. OtherIssue");
+            System.out.println("Enter the issue type: \n1. Account-related\n2. Transaction-related\n3. Other-issues");
             System.out.print("Selection: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); //Consumes a line
@@ -73,8 +73,8 @@ public class CompliantUserEnd{
             String issueType = switch (choice) {
                 case 1 -> "Account-related";
                 case 2 -> "Transaction-related";
-                case 3 -> "Other Issue";
-                default -> "vdbgfdb";
+                case 3 -> "Other-issues";
+                default -> "Invalid choice!";
             };
             
             if(!issueType.isBlank()){
@@ -90,7 +90,9 @@ public class CompliantUserEnd{
                     
                     if("yes".equals(confirmation.toLowerCase())){
                         registerIssue(choice, issueType, accName, accNo, issueDescription);
-                    }
+                    }else{
+                    System.out.println("Invalid input!");
+                }
                     break;
                 }
             }
@@ -110,13 +112,17 @@ public class CompliantUserEnd{
         
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE)) {
             
-            writer.write("Date: " + timeStamp);
+            writer.write("Date: " );
             writer.newLine();
-            writer.write("Account No: " + accountNumber);
+            writer.write(timeStamp);
+            writer.write("Account No: " );
+            writer.write(accountNumber);
             writer.newLine();
-            writer.write("Account Name: " + accountName);
+            writer.write("Account Name: ");
+            writer.write(accountName);
             writer.newLine();
-            writer.write("Issue Type: " + type);
+            writer.write("Issue Type: " );
+            writer.write(type);
             writer.newLine();
             writer.write("Description: ");
             writer.write(description);         
@@ -133,8 +139,8 @@ public class CompliantUserEnd{
         return switch (choice) {
             case 1 -> ACCOUNT_RELATED_PATH;
             case 2 -> TRANSACTION_RELATED_PATH;
-            case 3 -> OTHER_ISSUES_PATH;
-            default -> "fgfbgfb"; 
+            case 3 -> OTHER_ISSUES;
+            default -> "Invalid choice!"; 
         };
     }
 

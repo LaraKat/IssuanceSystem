@@ -1,6 +1,0 @@
-Date and Time: 20240527_013235
-Account No: 1234
-Account Name: Marc Nelson Belasa
-Issue Type: Technical Issue
-Description: alsdkm
-Marc Nelson Belasa,1234,alsdkm

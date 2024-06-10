@@ -23,7 +23,7 @@ public class ResolverIssueEnd {
     private static final Path ROOT_PATH = Paths.get("Storage");
     private static final String ACCOUNT_RELATED_PATH = "\\Account-related\\";
     private static final String TRANSACTION_RELATED_PATH = "\\Transaction-related\\";
-    private static final String OTHER_ISSUES_PATH = "\\OtherIssue\\";
+    private static final String OTHER_ISSUES = "\\Other-issues\\";
     
     public void start(){
         Scanner scanner = new Scanner(System.in);
@@ -32,7 +32,7 @@ public class ResolverIssueEnd {
         while(true){
         
             try{         
-                System.out.println("----Choose an Category----\n1. Account-related\n2. Transaction\n3. Others\n4. Exit");
+                System.out.println("----Choose an Category----\n1. Account-related\n2. Transaction-related\n3. Other-issues\n4. Exit");
                 System.out.println("Selection: ");
                 int choice = scanner.nextInt();
 
@@ -43,14 +43,15 @@ public class ResolverIssueEnd {
                 String issueType = switch (choice) {
                     case 1 -> "Account-related";
                     case 2 -> "Transaction-related";
-                    case 3 -> "Other Issue";
+                    case 3 -> "Other-issues";
                     default -> "";
                 };
 
                 if(!issueType.isEmpty()){
                     getAllIssuanceByCategory(choice, issueType);
                     break;
-                }
+                }                   
+                
 
                 System.out.println("Invalid Input try again!");
 
@@ -75,6 +76,7 @@ public class ResolverIssueEnd {
             if( files == null || files.length == 0){
                 System.out.println("No issue was submitted.");
                 System.out.println("-------------------");
+                start();
                 return;
             }
 
@@ -144,7 +146,7 @@ public class ResolverIssueEnd {
         return switch (choice) {
             case 1 -> ACCOUNT_RELATED_PATH;
             case 2 -> TRANSACTION_RELATED_PATH;
-            case 3 -> OTHER_ISSUES_PATH;
+            case 3 -> OTHER_ISSUES;
             default -> "";
         };
     }

@@ -20,52 +20,53 @@ import java.util.Scanner;
  * @author Lara
  */
 public class LoginSystem {
-    private final Path ACCOUNT_PATH = Paths.get("Storage\\AccountsFile.txt");
-    private final List<Account> accounts;
-    private Account currentUser;
+       private final Path ACCOUNT_PATH = Paths.get("Storage\\AccountsFile.txt");
+       private final List<Account> accounts;
+       private Account currentUser;
 
-    public LoginSystem(){
-        this.accounts = new ArrayList<>();
-        this.currentUser = null;
-        InitializeAccounts();
-    }
+       public LoginSystem(){
+          this.accounts = new ArrayList<>();
+          this.currentUser = null;
+          InitializeAccounts();
+      }
     
-    private void InitializeAccounts(){
-        Path filePath = Paths.get(ACCOUNT_PATH.toAbsolutePath().toString());
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()));
-        
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Assuming each line in the file contains account information in the format: accountNo,password,fullName
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    String accountNo = parts[0];
-                    String password = parts[1];
-                    String fullName = parts[2];
-
-                    Account account = new Account(accountNo, password, fullName);
-                    accounts.add(account);
-                }
-            }
-        }catch(IOException ex){
-            System.err.println("Error reading file: " + ex.getMessage());
-        }
-    }
-    
-    public void login(){
-        Scanner read = new Scanner(System.in);
-        String regex = "^[a-zA-Z]+$";
-        boolean flag = false;
-
-        while(true){
-            try{
+      private void InitializeAccounts(){
+          Path filePath = Paths.get(ACCOUNT_PATH.toAbsolutePath().toString());
+          try{
+              BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()));
+          
+              String line;
+              while ((line = reader.readLine()) != null) {
+                  // Assuming each line in the file contains account information in the format: accountNo,password,fullName
+                  String[] parts = line.split(",");
+                  if (parts.length == 3) {
+                      String accountNo = parts[0];
+                      String password = parts[1];
+                      String fullName = parts[2];
+  
+                      Account account = new Account(accountNo, password, fullName);
+                      accounts.add(account);
+                    }
+              }
+          }catch(IOException ex){
+              System.err.println("Error reading file: " + ex.getMessage());
+          }
+       }
+      
+      public void login(){
+         Scanner read = new Scanner(System.in);
+          String regex = "^[a-zA-Z]+$";
+  
+          boolean flag = false;
+          while(true){
+              try{
                 System.err.println("-----Login-----");
                 System.err.print("Account No: ");
                 String accNo = read.nextLine();
                 
                  if(String.valueOf(accNo).length() == 4){ 
                         
+
                         System.out.print("Password: ");
                         String password = read.nextLine(); 
                         

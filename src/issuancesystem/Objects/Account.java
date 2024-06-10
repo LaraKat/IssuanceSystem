@@ -9,9 +9,10 @@ package issuancesystem.Objects;
  * @author Lara
  */
 public class Account {
-    private String AccountNo;
-    private String Password;
-    private String Fullname;
+    private final String AccountNo;
+    private final String Password;
+    private final String Fullname;
+    
 
     public Account(String AccountNo, String Password, String Fullname) {
         this.AccountNo = AccountNo;
